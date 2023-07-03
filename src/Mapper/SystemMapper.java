@@ -11,7 +11,7 @@ import java.util.List;
 public interface SystemMapper {
     @Insert("insert into t_system(SEQ,SEQNAME,SEQVALUE) values(#{SEQ},#{SEQNAME},#{SEQVALUE})")
     int insertOneSystem(Bean.System system);
-    @Update("update t_system set SEQNAME=#{SEQNAME},SEQVALUE=#{SEQVALUE} where SEQ=#{SEQ}")
+    @Update("update t_system set SEQNAME=#{SEQNAME},SEQ=#{SEQ},MAXSEQ=#{MAXSEQ},DESC=#{DESC},FREEUSE1=#{FREEUSE1} where id=#{id}")
     int updateOneSystem(Bean.System system);
     @Delete("delete from t_system where SEQNAME=#{SEQNAME}")
     int deleteOneSystemBySEQNAME(String SEQNAME);
@@ -25,4 +25,10 @@ public interface SystemMapper {
     List<Bean.System> selectAllSystemBySEQ(Integer SEQ);
     @Select("select * from t_system where SEQNAME=#{SEQNAME}")
     List<Bean.System> selectSystemBySomething(SelectValue systemSelectValue);
+    @Select("select MAXSEQ from t_system where SEQNAME=#{param1}")
+    String findMAXSEQ(String SEQNAME);
+    @Update("update t_system set SEQ=#{param1} where SEQNAME=#{param2}")
+    void updateSEQ(String nextNumber, String unitaccnum);
+    @Select("select MAX(SEQ) from t_system where SEQNAME=#{param1}")
+    String findMAXNUM(String unitaccnum);
 }

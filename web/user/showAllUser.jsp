@@ -15,6 +15,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../layui/css/layui.css" rel="stylesheet">
+    <style>
+        .layui-form-label {
+            width: 130px;
+        }
+        .layui-input-block {
+            margin-left: 160px;
+        }
+    </style>
 </head>
 <body>
 <%
@@ -113,6 +121,7 @@
                         return SelectData[td.find('select').val()];
                     }}
                 ,{field:'NUM', minwidth:260, title: '证件号码'}
+                ,{field:'PERACCSTATE', width:60, title: '状态'}
                 ,{fixed: 'right', title:'操作', width: 134, minWidth: 125, toolbar: '#barDemo'}
             ]]
             ,done: function(){

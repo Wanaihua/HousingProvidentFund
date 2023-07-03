@@ -15,6 +15,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="../layui/css/layui.css" rel="stylesheet">
+  <style>
+    .layui-form-label {
+      width: 130px;
+    }
+    .layui-input-block {
+      margin-left: 160px;
+    }
+  </style>
 </head>
 <body>
 <%

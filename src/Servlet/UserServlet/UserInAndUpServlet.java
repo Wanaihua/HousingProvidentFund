@@ -4,6 +4,7 @@ import Bean.Business;
 import Bean.Company;
 import Bean.User;
 import Dao.CompanyDao;
+import Dao.SystemDao;
 import Dao.UserDao;
 
 import javax.servlet.ServletException;
@@ -22,9 +23,15 @@ public class UserInAndUpServlet extends HttpServlet {
         UserDao dao = new UserDao();
         CompanyDao dao1 = new CompanyDao();
         String uid = request.getParameter("uid");
+        String nextNumber = dao.selectUserNextNumber();
+        SystemDao systemDao = new SystemDao();
         if ("1".equals(uid)) {
+            if(!systemDao.checkNumber("PERACCNUM",nextNumber)){
+                request.setAttribute("msg", "添加失败,账号已达上限");
+                request.getRequestDispatcher("user/RegisterUser.jsp").forward(request, response);
+            }
             User user = new User(
-                    dao.selectUserNextNumber(),
+                    nextNumber,
                     new String(request.getParameter("UNITACCNUM").getBytes("iso-8859-1"), "utf-8"),
                     new String(request.getParameter("NAME").getBytes("iso-8859-1"), "utf-8"),
                     new String(request.getParameter("TYPE").getBytes("iso-8859-1"), "utf-8"),
@@ -89,6 +96,17 @@ public class UserInAndUpServlet extends HttpServlet {
                     new String(request.getParameter("OP").getBytes("iso-8859-1"), "utf-8"),
                     new String(request.getParameter("REMARK").getBytes("iso-8859-1"), "utf-8")
             );
+            String UNITACCNUM=user.getUNITACCNUM();
+            String OldUnitAccnum=dao.selectOldUnitAccnumByACCNUM(user.getACCNUM());
+            Company company = dao1.selectCompanyByUNITACCNUM(Integer.parseInt(UNITACCNUM));
+            if(company==null){
+                request.setAttribute("msg", "添加失败,公司不存在");
+                request.getRequestDispatcher("user/showAllUser.jsp").forward(request, response);
+                return;
+            }else{
+                dao1.updateOldCompanyPERSNUM(OldUnitAccnum);
+                dao1.updateNewCompanyPERSNUM(UNITACCNUM);
+            }
             Business business = new Business();
             business.setBusinessMessage("用户数据修改:" + user.getNAME());
             business.setTime(new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()));

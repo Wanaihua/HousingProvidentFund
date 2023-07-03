@@ -210,4 +210,24 @@ public class CompanyDao {
         sqlSession.commit();
         sqlSession.close();
     }
+
+    public void updateOldCompanyPERSNUM(String oldUnitAccnum) {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        CompanyMapper companyMapper = sqlSession.getMapper(CompanyMapper.class);
+        String PERSNUM = companyMapper.findNowPERSNUM(oldUnitAccnum);
+        PERSNUM=String.valueOf(Integer.parseInt(PERSNUM)-1);
+        companyMapper.updateOldCompanyPERSNUM(PERSNUM,oldUnitAccnum);
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    public void updateNewCompanyPERSNUM(String unitaccnum) {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        CompanyMapper companyMapper = sqlSession.getMapper(CompanyMapper.class);
+        String PERSNUM = companyMapper.findNowPERSNUM(unitaccnum);
+        PERSNUM=String.valueOf(Integer.parseInt(PERSNUM)+1);
+        companyMapper.updateNewCompanyPERSNUM(PERSNUM,unitaccnum);
+        sqlSession.commit();
+        sqlSession.close();
+    }
 }

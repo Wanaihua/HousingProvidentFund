@@ -274,10 +274,10 @@
                     title: '编辑 - :'+data.SEQNAME,
                     type: 1,
                     area: ['80%','80%'],
-                    content: '<div style="padding: 16px;"><form class="layui-form" action="../SystemInAndUpServlet" method="post" style="margin-top: 0px;" >'
-                        +'<input type="hidden" name="cid" value="2">'
+                    content: '<div style="padding: 16px;"><form class="layui-form" action="../systemInAndDelServlet" method="post" style="margin-top: 0px;" >'
+                        +'<input type="hidden" name="id" value="'+data.id+'">'
                         +'<div class="layui-form-item"><label class="layui-form-label">键值信息</label><div class="layui-input-block"> <input type="text" name="SEQNAME" required  lay-verify="required" value="'+data.SEQNAME+'" autocomplete="off" class="layui-input"> </div></div>'
-                        +'<div class="layui-form-item"><label class="layui-form-label">当前序号</label><div class="layui-input-block"> <input type="text" name="SEQ" required  lay-verify="required" value="'+data.SEQ+'" autocomplete="off" class="layui-input"> </div></div>'
+                        +'<div class="layui-form-item"><label class="layui-form-label">当前序号</label><div class="layui-input-block"> <input type="text" name="SEQ" disabled="disabled" required  lay-verify="required" value="'+data.SEQ+'" autocomplete="off" class="layui-input"> </div></div>'
                         +'<div class="layui-form-item"><label class="layui-form-label">最大序号</label><div class="layui-input-block"> <input type="text" name="MAXSEQ" required  lay-verify="required" value="'+data.MAXSEQ+'" autocomplete="off" class="layui-input"> </div></div>'
                         +'<div class="layui-form-item"><label class="layui-form-label">描述</label><div class="layui-input-block"> <input type="text" name="DESC" required  lay-verify="required" value="'+data.DESC+'" autocomplete="off" class="layui-input"> </div></div>'
                         +'<div class="layui-form-item"><label class="layui-form-label">备用1</label><div class="layui-input-block"> <input type="text" name="FREEUSE1" required  lay-verify="required" value="'+data.FREEUSE1+'" autocomplete="off" class="layui-input"> </div></div>'

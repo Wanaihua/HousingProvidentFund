@@ -4,6 +4,7 @@ import Bean.Business;
 import Bean.Company;
 import Dao.BusinessDao;
 import Dao.CompanyDao;
+import Dao.SystemDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,10 +19,17 @@ import java.util.Date;
 public class CompanyInAndUpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CompanyDao dao = new CompanyDao();
+        SystemDao systemDao = new SystemDao();
         String cid = request.getParameter("cid");
         if ("1".equals(cid)) {
+            String NextNumber = dao.selectCompanyNextNumber();
+            if(!systemDao.checkNumber("UNITACCNUM", NextNumber)){
+                request.setAttribute("msg", "单位账号已达上限");
+                request.setAttribute("cid", "1");
+                request.getRequestDispatcher("company/showCompany.jsp").forward(request, response);
+            }
             Company company = new Company(
-                    dao.selectCompanyNextNumber(),
+                    NextNumber,
                     new String(request.getParameter("UNITACCNAME").getBytes("iso-8859-1"), "utf-8"),
                     new String(request.getParameter("UNITADDR").getBytes("iso-8859-1"), "utf-8"),
                     new String(request.getParameter("ORGCODE").getBytes("iso-8859-1"), "utf-8"),

@@ -38,8 +38,14 @@ public interface CompanyMapper {
     void updateCompanyPayDate(String nowDate, String unitaccnum);
     @Update("update t_company set ACCSTATE='9' where UNITACCNUM=#{param1}")
     void logoutCompany(String num);
-    @Select("select * from t_company where UNITACCNUM=#{param1}")
+    @Select("select * from t_company where UNITACCNUM=#{param1} and ACCSTATE='0'")
     Company selectCompanyByUNITACCNUM(int unitaccnum);
     @Update("update t_company set PERSNUM=#{PERSNUM} where UNITACCNUM=#{UNITACCNUM}")
     void updateCompanyPERSNUM(Company company);
+    @Select("select PERSNUM from t_company where UNITACCNUM=#{param1}")
+    String findNowPERSNUM(String oldUnitAccnum);
+    @Update("update t_company set PERSNUM=#{param1} where UNITACCNUM=#{param2}")
+    void updateOldCompanyPERSNUM(String persnum, String oldUnitAccnum);
+    @Update("update t_company set PERSNUM=#{param1} where UNITACCNUM=#{param2}")
+    void updateNewCompanyPERSNUM(String persnum, String unitaccnum);
 }

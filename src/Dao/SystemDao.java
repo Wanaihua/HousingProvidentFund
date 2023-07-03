@@ -79,4 +79,25 @@ public class SystemDao {
         }
         return n;
     }
+
+    public boolean checkNumber(String unitaccnum, String nextNumber) {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        SystemMapper systemMapper = sqlSession.getMapper(SystemMapper.class);
+        String MAXSEQ=systemMapper.findMAXSEQ(unitaccnum);
+        if(Integer.parseInt(nextNumber)<=Integer.parseInt(MAXSEQ)){
+            String MAXNUM=systemMapper.findMAXNUM(unitaccnum);
+            if(Integer.parseInt(nextNumber)<=Integer.parseInt(MAXNUM)) {
+                systemMapper.updateSEQ(MAXNUM,unitaccnum);
+            }else{
+                systemMapper.updateSEQ(nextNumber,unitaccnum);
+            }
+            sqlSession.commit();
+            sqlSession.close();
+            return true;
+        }else{
+            sqlSession.close();
+            return false;
+        }
+
+    }
 }

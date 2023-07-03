@@ -1,6 +1,7 @@
 package Bean;
 
 public class System {
+    private int id;
     private String SEQNAME;     //键值信息
     private String SEQ;         //当前序号
     private String MAXSEQ;      //最大序号
@@ -57,6 +58,15 @@ public class System {
 
     public void setFREEUSE1(String FREEUSE1) {
         this.FREEUSE1 = FREEUSE1;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

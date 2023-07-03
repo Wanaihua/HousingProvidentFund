@@ -1,5 +1,6 @@
 package Mapper;
 
+import Bean.Company;
 import Bean.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -21,8 +22,8 @@ public interface UserMapper {
     int selectExictUserNumber(String param1,String param2);
     @Select("select * from t_user")
     List<User> selectAllUser();
-    @Select("select * from t_user where #{param1}=#{param2}")
-    List<User> selectUserBySomething(String param1, String param2);
+    @Select("select * from t_user where UNITACCNUM=#{param1}")
+    List<User> selectUserBySomething(String param);
     @Select("select * from t_user where #{param1}=#{param2} and UNITACCNUM=#{param3}")
     List<User> selectUserByLike(String typename,String value1, String UNITACCNUM);
     @Select("select * from t_user where #{param1} between #{param2} and #{param3} and UNITACCNUM=#{param4}")
@@ -49,4 +50,6 @@ public interface UserMapper {
     String selectBalanceByAccnum(int accnum);
     @Update("update t_user set BALANCE=#{param2} where ACCNUM=#{param1}")
     void setBalanceByAccnum(int accnum, int i);
+    @Select("select UNITACCNUM from t_user where ACCNUM=#{param1}")
+    String selectOldUnitAccnumByACCNUM(String accnum);
 }

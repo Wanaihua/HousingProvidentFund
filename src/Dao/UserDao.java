@@ -106,7 +106,7 @@ public class UserDao {
     public List<User> selectUserBySomething(String tag, String va) {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        List<User> list = userMapper.selectUserBySomething(tag, va);
+        List<User> list = userMapper.selectUserBySomething(va);
         sqlSession.close();
         return list;
     }
@@ -248,5 +248,13 @@ public class UserDao {
         userMapper.setBalanceByAccnum(accnum, i);
         sqlSession.commit();
         sqlSession.close();
+    }
+
+    public String selectOldUnitAccnumByACCNUM(String accnum) {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        String OldUnitAccnum  = userMapper.selectOldUnitAccnumByACCNUM(accnum);
+        sqlSession.close();
+        return OldUnitAccnum;
     }
 }
